@@ -5,8 +5,10 @@ import TelaLogin from "./screens/TelaLogin";
 import TelaCadastro from "./screens/TelaCadastro";
 import Home from "./screens/Home";
 import Pesquisar from "./screens/Pesquisar";
+import Atividades from "./screens/Atividades";
 import Perfil from "./screens/Perfil";
 import Menu from "./screens/Menu";
+import CriarPublicacao from "./screens/CriarPublicacao";
 import { ContextoPai } from "./src/contexts/ContextoPai";
 import Toast from "react-native-toast-message";
 
@@ -40,6 +42,11 @@ const App = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="Atividades"
+            component={Atividades}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name="Perfil"
             component={Perfil}
             options={{ headerShown: false }}
@@ -47,6 +54,11 @@ const App = () => {
           <Stack.Screen
             name="Menu"
             component={Menu}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="CriarPublicacao"
+            component={CriarPublicacao}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

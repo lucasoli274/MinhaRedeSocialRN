@@ -32,6 +32,7 @@ const TelaCadastro = ({ navigation }) => {
     Toast.show({
       type: 'success',
       text1: 'Cadastro bem sucedido.',
+      text2: 'Continue para a tela de login',
       position: 'top',
       visibilityTime: 3000,
     });
@@ -100,7 +101,7 @@ const TelaCadastro = ({ navigation }) => {
           setUsuario('');
           setSenha1('');
           setSenha2('');
-          navigation.navigate("Home");
+          navigation.navigate("TelaLogin");
         })
         .catch((error) => {
           if (error.response) {

@@ -13,22 +13,22 @@ export const BarraDeNavegacaoProvider = ({ children }) => {
   const [fundoHome, setFundoHome] = useState(corFundo);
   const [fundoSearch, setFundoSearch] = useState(corFundo);
   const [fundoPerfil, setFundoPerfil] = useState(corFundo);
-  const [fundoMenu, setFundoMenu] = useState(corFundo);
+  const [fundoAtividades, setFundoAtividades] = useState(corFundo);
 
   const [corBtnHome, setCorBtnHome] = useState(corBotoes);
   const [corBtnSearch, setCorBtnSearch] = useState(corBotoes);
   const [corBtnPerfil, setCorBtnPerfil] = useState(corBotoes);
-  const [corBtnMenu, setCorBtnMenu] = useState(corBotoes);
+  const [corBtnAtividades, setCorBtnAtividades] = useState(corBotoes);
 
   const resetNavegacao = () => {
     setFundoHome(corPrincipal);
     setFundoSearch(corFundo);
     setFundoPerfil(corFundo);
-    setFundoMenu(corFundo);
+    setFundoAtividades(corFundo);
     setCorBtnHome("white");
     setCorBtnSearch(corBotoes);
     setCorBtnPerfil(corBotoes);
-    setCorBtnMenu(corBotoes);
+    setCorBtnAtividades(corBotoes);
   };
 
   return (
@@ -40,16 +40,16 @@ export const BarraDeNavegacaoProvider = ({ children }) => {
         setFundoSearch,
         fundoPerfil,
         setFundoPerfil,
-        fundoMenu,
-        setFundoMenu,
+        fundoAtividades,
+        setFundoAtividades,
         corBtnHome,
         setCorBtnHome,
         corBtnSearch,
         setCorBtnSearch,
         corBtnPerfil,
         setCorBtnPerfil,
-        corBtnMenu,
-        setCorBtnMenu,
+        corBtnAtividades,
+        setCorBtnAtividades,
         resetNavegacao,
       }}
     >

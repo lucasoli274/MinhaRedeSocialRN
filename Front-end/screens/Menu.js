@@ -13,7 +13,6 @@ import Toast from "react-native-toast-message";
 import axios from "axios";
 import { useColors } from "../src/contexts/Colors";
 import { useFonts } from "../src/contexts/Fonts";
-import BarraDeNavegacao from "../src/components/BarraDeNavegacao";
 import { useAuth } from "../src/contexts/Auth";
 
 const Menu = ({ navigation }) => {
@@ -107,15 +106,20 @@ const Menu = ({ navigation }) => {
 
   return (
     <View style={{ ...styles.container, backgroundColor: corFundo }}>
-      <Text
-        style={{
-          ...styles.tituloTxt,
-          fontSize: fonteGrande.fontSize,
-          color: fonteGrande.color,
-        }}
-      >
-        Configurações
-      </Text>
+      <View style={styles.cabecalho}>
+        <Pressable onPress={() => navigation.goBack()}>
+          <FontAwesome name="arrow-left" color={corContraste} size={30} />
+        </Pressable>
+        <Text
+          style={{
+            fontWeight: "bold",
+            fontSize: fonteGrande.fontSize,
+            color: fonteGrande.color,
+          }}
+        >
+          Configurações
+        </Text>
+      </View>
       <View style={styles.modoEscuro}>
         <Text
           style={{ fontSize: fonteMedia.fontSize, color: fonteMedia.color }}
@@ -355,8 +359,6 @@ const Menu = ({ navigation }) => {
           </View>
         </View>
       </Modal>
-
-      <BarraDeNavegacao />
     </View>
   );
 };
@@ -365,20 +367,23 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  tituloTxt: {
-    marginTop: 40,
-    alignSelf: "center",
+  cabecalho: {
+    height: '12%',
     width: "95%",
-    borderBottomColor: "gray",
-    borderBottomWidth: 2,
     padding: 10,
-    fontWeight: "bold",
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "space-between",
+    alignSelf: "center",
+    borderBottomWidth: 2,
+    borderBottomColor: "gray",
   },
   modoEscuro: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 20,
+    marginTop: 20,
   },
   btnOpcoes: {
     marginHorizontal: 20,

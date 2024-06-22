@@ -23,33 +23,33 @@ const BarraDeNavegacao = () => {
     setFundoSearch,
     fundoPerfil,
     setFundoPerfil,
-    fundoMenu,
-    setFundoMenu,
+    fundoAtividades,
+    setFundoAtividades,
     corBtnHome,
     setCorBtnHome,
     corBtnSearch,
     setCorBtnSearch,
     corBtnPerfil,
     setCorBtnPerfil,
-    corBtnMenu,
-    setCorBtnMenu,
+    corBtnAtividades,
+    setCorBtnAtividades,
   } = useBarraDeNavegacao();
 
   const homeRef = useRef(null);
   const searchRef = useRef(null);
   const perfilRef = useRef(null);
-  const menuRef = useRef(null);
+  const atividadesRef = useRef(null);
 
   const btnHome = () => {
     homeRef.current?.pulse(500);
     setFundoHome(corPrincipal);
     setFundoSearch(corFundo);
     setFundoPerfil(corFundo);
-    setFundoMenu(corFundo);
+    setFundoAtividades(corFundo);
     setCorBtnHome("white");
     setCorBtnSearch(corBotoes);
     setCorBtnPerfil(corBotoes);
-    setCorBtnMenu(corBotoes);
+    setCorBtnAtividades(corBotoes);
     navigation.navigate("Home");
   };
 
@@ -58,11 +58,11 @@ const BarraDeNavegacao = () => {
     setFundoHome(corFundo);
     setFundoSearch(corPrincipal);
     setFundoPerfil(corFundo);
-    setFundoMenu(corFundo);
+    setFundoAtividades(corFundo);
     setCorBtnHome(corBotoes);
     setCorBtnSearch("white");
     setCorBtnPerfil(corBotoes);
-    setCorBtnMenu(corBotoes);
+    setCorBtnAtividades(corBotoes);
     navigation.navigate("Pesquisar");
   };
 
@@ -71,26 +71,31 @@ const BarraDeNavegacao = () => {
     setFundoHome(corFundo);
     setFundoSearch(corFundo);
     setFundoPerfil(corPrincipal);
-    setFundoMenu(corFundo);
+    setFundoAtividades(corFundo);
     setCorBtnHome(corBotoes);
     setCorBtnSearch(corBotoes);
     setCorBtnPerfil("white");
-    setCorBtnMenu(corBotoes);
+    setCorBtnAtividades(corBotoes);
     navigation.navigate("Perfil");
   };
 
-  const btnMenu = () => {
-    menuRef.current?.pulse(500);
+  const btnAtividades = () => {
+    atividadesRef.current?.pulse(500);
     setFundoHome(corFundo);
     setFundoSearch(corFundo);
     setFundoPerfil(corFundo);
-    setFundoMenu(corPrincipal);
+    setFundoAtividades(corPrincipal);
     setCorBtnHome(corBotoes);
     setCorBtnSearch(corBotoes);
     setCorBtnPerfil(corBotoes);
-    setCorBtnMenu("white");
-    navigation.navigate("Menu");
+    setCorBtnAtividades("white");
+    navigation.navigate("Atividades");
   };
+
+  const btnPublicar = () => {
+    atividadesRef.current?.pulse(500);
+    navigation.navigate("CriarPublicacao");
+  }
 
   return (
     <View
@@ -117,8 +122,16 @@ const BarraDeNavegacao = () => {
         </Pressable>
       </Animatable.View>
       <Animatable.View style={{ ...styles.btnPublicar, borderWidth: 0 }}>
-        <Pressable>
+        <Pressable onPress={btnPublicar}>
           <FontAwesome name="plus-circle" color={corPrincipal} size={50} />
+        </Pressable>
+      </Animatable.View>
+      <Animatable.View
+        ref={atividadesRef}
+        style={{ ...styles.btn, backgroundColor: fundoAtividades }}
+      >
+        <Pressable onPress={btnAtividades}>
+          <FontAwesome name="bell" color={corBtnAtividades} size={30} />
         </Pressable>
       </Animatable.View>
       <Animatable.View
@@ -127,14 +140,6 @@ const BarraDeNavegacao = () => {
       >
         <Pressable onPress={btnPerfil}>
           <FontAwesome name="user-circle" color={corBtnPerfil} size={30} />
-        </Pressable>
-      </Animatable.View>
-      <Animatable.View
-        ref={menuRef}
-        style={{ ...styles.btn, backgroundColor: fundoMenu }}
-      >
-        <Pressable onPress={btnMenu}>
-          <FontAwesome name="bars" color={corBtnMenu} size={30} />
         </Pressable>
       </Animatable.View>
     </View>
