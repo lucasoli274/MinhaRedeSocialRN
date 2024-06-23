@@ -9,6 +9,7 @@ import Atividades from "./screens/Atividades";
 import Perfil from "./screens/Perfil";
 import Menu from "./screens/Menu";
 import CriarPublicacao from "./screens/CriarPublicacao";
+import EditarPublicacao from "./screens/EditarPublicacao";
 import { ContextoPai } from "./src/contexts/ContextoPai";
 import Toast from "react-native-toast-message";
 
@@ -59,6 +60,11 @@ const App = () => {
           <Stack.Screen
             name="CriarPublicacao"
             component={CriarPublicacao}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="EditarPublicacao"
+            component={EditarPublicacao}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

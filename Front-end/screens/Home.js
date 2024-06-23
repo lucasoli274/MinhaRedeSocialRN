@@ -70,6 +70,39 @@ const Home = ({ navigation }) => {
     }
   };
 
+  const btnExcluirPost = async (id) => {
+    try {
+      const response = await axios.delete(`http://192.168.0.34:8080/post/${id}`);
+      getPublicacoes();
+      toastSucessoExclusao();
+    } catch {
+      toastErroExclusao();
+      return null;
+    }
+  }
+
+  const toastSucessoExclusao = () => {
+    Toast.show({
+      type: "info",
+      position: "bottom",
+      text1: "A publicação foi excluída.",
+      visibilityTime: 3000,
+    });
+  };
+
+  const toastErroExclusao = () => {
+    Toast.show({
+      type: "error",
+      position: "bottom",
+      text1: "Erro ao excluir publicação",
+      visibilityTime: 3000,
+    });
+  };
+
+  const btnEditarPost = (publicacao) => {
+    navigation.navigate("EditarPublicacao", { publicacao: publicacao });
+  }
+
   const toggleMostrarOpcoesPost = (id) => {
     setMostrarOpcoesPost((prev) => ({
       ...prev,
@@ -124,20 +157,63 @@ const Home = ({ navigation }) => {
                 </Pressable>
                 {mostrarOpcoesPost[publicacao.id] && (
                   <View
-                    style={{ ...styles.opcoesPost, backgroundColor: corFundo }}
+                    style={{
+                      ...styles.opcoesPost,
+                      backgroundColor: corFundo,
+                      borderColor: corContraste,
+                    }}
                   >
                     {usuario.usuario == publicacao.usuario.usuario && (
                       <View>
-                        <Pressable>
-                          <Text style={styles.opcoesPostTxt}>Editar</Text>
+                        <Pressable style={styles.btnOpcoesPost} onPress={() => btnEditarPost(publicacao)}>
+                          <Text
+                            style={{
+                              ...styles.opcoesPostTxt,
+                              fontSize: fontePequena.fontSize,
+                              color: fontePequena.color,
+                            }}
+                          >
+                            Editar
+                          </Text>
+                          <FontAwesome
+                            name="pencil"
+                            color={corContraste}
+                            size={15}
+                          />
                         </Pressable>
-                        <Pressable>
-                          <Text style={styles.opcoesPostTxt}>Excluir</Text>
+                        <Pressable style={styles.btnOpcoesPost} onPress={() => btnExcluirPost(publicacao.id)}>
+                          <Text
+                            style={{
+                              ...styles.opcoesPostTxt,
+                              fontSize: fontePequena.fontSize,
+                              color: fontePequena.color,
+                            }}
+                          >
+                            Excluir
+                          </Text>
+                          <FontAwesome
+                            name="trash"
+                            color={corContraste}
+                            size={15}
+                          />
                         </Pressable>
                       </View>
                     )}
-                    <Pressable>
-                      <Text style={styles.opcoesPostTxt}>Salvar</Text>
+                    <Pressable style={styles.btnOpcoesPost}>
+                      <Text
+                        style={{
+                          ...styles.opcoesPostTxt,
+                          fontSize: fontePequena.fontSize,
+                          color: fontePequena.color,
+                        }}
+                      >
+                        Salvar
+                      </Text>
+                      <FontAwesome
+                        name="bookmark"
+                        color={corContraste}
+                        size={15}
+                      />
                     </Pressable>
                   </View>
                 )}
@@ -177,7 +253,9 @@ const Home = ({ navigation }) => {
                     </Text>
                   </Pressable>
                 </Animatable.View>
-                <Animatable.View ref={(el) => (comentarRefs.current[index] = el)}>
+                <Animatable.View
+                  ref={(el) => (comentarRefs.current[index] = el)}
+                >
                   <Pressable
                     style={styles.interacoesPost}
                     onPress={() => btnComentar(index)}
@@ -190,7 +268,7 @@ const Home = ({ navigation }) => {
                         margin: 5,
                       }}
                     >
-                      Comentar
+                      Comentários
                     </Text>
                   </Pressable>
                 </Animatable.View>
@@ -199,8 +277,22 @@ const Home = ({ navigation }) => {
           ))}
           <View style={{ alignItems: "center", height: 180 }}>
             <FontAwesome name="minus" color={"gray"} size={40} />
-            <Text>Íh, parece que não há nada por aqui!</Text>
-            <Text>Que tal fazer uma atualização legal agora? ✨</Text>
+            <Text
+              style={{
+                fontSize: fontePequena.fontSize,
+                color: fontePequena.color,
+              }}
+            >
+              Íh, parece que não há nada por aqui!
+            </Text>
+            <Text
+              style={{
+                fontSize: fontePequena.fontSize,
+                color: fontePequena.color,
+              }}
+            >
+              Que tal fazer uma atualização legal agora? ✨
+            </Text>
           </View>
         </ScrollView>
         <BarraDeNavegacao />
@@ -254,7 +346,12 @@ const styles = StyleSheet.create({
   },
   abrirOpcoesPost: {
     position: "absolute",
-    right: 5,
+    right: 0,
+    borderRadius: 100,
+    width: 40,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   opcoesPost: {
     position: "absolute",
@@ -263,10 +360,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     zIndex: 1,
-    width: "30%",
+    width: "37%",
   },
   opcoesPostTxt: {
-    padding: 7,
+    paddingVertical: 7,
+  },
+  btnOpcoesPost: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 7,
   },
 });
 

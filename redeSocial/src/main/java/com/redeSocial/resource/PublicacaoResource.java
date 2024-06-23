@@ -32,4 +32,10 @@ public class PublicacaoResource {
     private void deletaPost(@PathVariable Long id) {
         publicacaoRepository.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    private Publicacao editaPost(@PathVariable Long id, @RequestBody Publicacao publicacao) {
+        publicacao.setId(id);
+        return publicacaoRepository.save(publicacao);
+    }
 }

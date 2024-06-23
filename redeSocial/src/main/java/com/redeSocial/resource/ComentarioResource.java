@@ -32,4 +32,10 @@ public class ComentarioResource {
     private void deletaComentario(@PathVariable Long id) {
         comentarioRepository.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    private Comentario editaComentario(@PathVariable Long id, @RequestBody Comentario comentario) {
+        comentario.setId(id);
+        return comentarioRepository.save(comentario);
+    }
 }

@@ -60,6 +60,11 @@ public class UsuarioResource {
         }
     }
 
+    @PutMapping("/{id}")
+    private Usuario editaUsuario(@PathVariable Long id, @RequestBody Usuario usuario) {
+        usuario.setId(id);
+        return usuarioRepository.save(usuario);
+    }
     @Data
     static class LoginRequest {
         private String usuario;
