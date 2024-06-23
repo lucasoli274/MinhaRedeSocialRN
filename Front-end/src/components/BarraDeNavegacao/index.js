@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useColors } from "../../contexts/Colors";
 import { FontAwesome } from "@expo/vector-icons";
@@ -110,7 +110,7 @@ const BarraDeNavegacao = () => {
         style={{ ...styles.btn, backgroundColor: fundoHome }}
       >
         <Pressable onPress={btnHome}>
-          <FontAwesome name="home" color={corBtnHome} size={30} />
+          <FontAwesome name='home' color={corBtnHome} size={30} />
         </Pressable>
       </Animatable.View>
       <Animatable.View
@@ -131,7 +131,7 @@ const BarraDeNavegacao = () => {
         style={{ ...styles.btn, backgroundColor: fundoAtividades }}
       >
         <Pressable onPress={btnAtividades}>
-          <FontAwesome name="bell" color={corBtnAtividades} size={30} />
+          <FontAwesome name="bell-o" color={corBtnAtividades} size={30} />
         </Pressable>
       </Animatable.View>
       <Animatable.View
@@ -139,7 +139,7 @@ const BarraDeNavegacao = () => {
         style={{ ...styles.btn, backgroundColor: fundoPerfil }}
       >
         <Pressable onPress={btnPerfil}>
-          <FontAwesome name="user-circle" color={corBtnPerfil} size={30} />
+          <FontAwesome name="user-circle-o" color={corBtnPerfil} size={30} />
         </Pressable>
       </Animatable.View>
     </View>

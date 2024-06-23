@@ -1,28 +1,35 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Image,
   Pressable,
-  TextInput,
   ScrollView,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
 import axios from "axios";
+import * as Animatable from "react-native-animatable";
 import { useColors } from "../src/contexts/Colors";
 import { useFonts } from "../src/contexts/Fonts";
 import BarraDeNavegacao from "../src/components/BarraDeNavegacao";
 import { useAuth } from "../src/contexts/Auth";
 
 const Home = ({ navigation }) => {
-  const { corPrincipal, corFundo, corContraste } = useColors();
+  const { corPrincipal, corFundo, corContraste, modoEscuro } = useColors();
   const { fontePequena, fonteMedia, fonteGrande } = useFonts();
+
+  const corPost = modoEscuro ? "#28444f" : "#e3e2e1";
 
   const { usuario } = useAuth();
 
   const [publicacoes, setPublicacoes] = useState([]);
+  const [mostrarOpcoesPost, setMostrarOpcoesPost] = useState({});
+
+  const likeRefs = useRef([]);
+  const comentarRefs = useRef([]);
 
   const getPublicacoes = async () => {
     try {
@@ -51,26 +58,154 @@ const Home = ({ navigation }) => {
     return getNovamente;
   }, [navigation]);
 
+  const btnLike = (index) => {
+    if (likeRefs.current[index]) {
+      likeRefs.current[index].pulse(500);
+    }
+  };
+
+  const btnComentar = (index) => {
+    if (comentarRefs.current[index]) {
+      comentarRefs.current[index].pulse(500);
+    }
+  };
+
+  const toggleMostrarOpcoesPost = (id) => {
+    setMostrarOpcoesPost((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const handleOutsidePress = () => {
+    setMostrarOpcoesPost({});
+  };
+
   return (
-    <View style={{ ...styles.container, backgroundColor: corFundo }}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <View style={styles.cabecalho}>
-          <Image
-            source={require("../assets/battle-net-logo.png")}
-            style={{ height: 60, width: 60 }}
-          />
-        </View>
-        {publicacoes.map((publicacao) => (
-          <View style={styles.post}>
-            <Text>{publicacao.data}</Text>
-            <Text>{publicacao.usuario.usuario}</Text>
-            <Text>{publicacao.conteudo}</Text>
+    <TouchableWithoutFeedback onPress={handleOutsidePress}>
+      <View
+        style={{
+          ...styles.container,
+          backgroundColor: modoEscuro ? "#121f24" : "#f8f7f4",
+        }}
+      >
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.cabecalho}>
+            <Image
+              source={require("../assets/battle-net-logo.png")}
+              style={{ height: 60, width: 60 }}
+            />
           </View>
-        ))}
-        <View style={{height: 100}}/>
-      </ScrollView>
-      <BarraDeNavegacao />
-    </View>
+          {publicacoes.map((publicacao, index) => (
+            <View
+              key={publicacao.id}
+              style={{ ...styles.post, backgroundColor: corPost }}
+            >
+              <View style={styles.cabecalhoPost}>
+                <FontAwesome name="user-circle" color={"gray"} size={30} />
+                <Text
+                  style={{
+                    ...styles.nomeUsuario,
+                    fontSize: fonteMedia.fontSize,
+                    color: fonteMedia.color,
+                  }}
+                >
+                  {publicacao.usuario.usuario}
+                </Text>
+                <Pressable
+                  style={styles.abrirOpcoesPost}
+                  onPress={() => toggleMostrarOpcoesPost(publicacao.id)}
+                >
+                  <FontAwesome
+                    name="ellipsis-v"
+                    color={corContraste}
+                    size={20}
+                  />
+                </Pressable>
+                {mostrarOpcoesPost[publicacao.id] && (
+                  <View
+                    style={{ ...styles.opcoesPost, backgroundColor: corFundo }}
+                  >
+                    {usuario.usuario == publicacao.usuario.usuario && (
+                      <View>
+                        <Pressable>
+                          <Text style={styles.opcoesPostTxt}>Editar</Text>
+                        </Pressable>
+                        <Pressable>
+                          <Text style={styles.opcoesPostTxt}>Excluir</Text>
+                        </Pressable>
+                      </View>
+                    )}
+                    <Pressable>
+                      <Text style={styles.opcoesPostTxt}>Salvar</Text>
+                    </Pressable>
+                  </View>
+                )}
+              </View>
+              <Text style={{ fontSize: fontePequena.fontSize, color: "gray" }}>
+                {publicacao.data}
+              </Text>
+              <Text
+                style={{
+                  fontSize: fontePequena.fontSize,
+                  color: fontePequena.color,
+                  marginTop: 5,
+                }}
+              >
+                {publicacao.conteudo}
+              </Text>
+              <View
+                style={{
+                  ...styles.interacoesPostView,
+                  borderTopColor: corContraste,
+                }}
+              >
+                <Animatable.View ref={(el) => (likeRefs.current[index] = el)}>
+                  <Pressable
+                    style={styles.interacoesPost}
+                    onPress={() => btnLike(index)}
+                  >
+                    <FontAwesome name="bolt" color={"gray"} size={20} />
+                    <Text
+                      style={{
+                        fontSize: fontePequena.fontSize,
+                        color: fontePequena.color,
+                        margin: 5,
+                      }}
+                    >
+                      Curtir
+                    </Text>
+                  </Pressable>
+                </Animatable.View>
+                <Animatable.View ref={(el) => (comentarRefs.current[index] = el)}>
+                  <Pressable
+                    style={styles.interacoesPost}
+                    onPress={() => btnComentar(index)}
+                  >
+                    <FontAwesome name="comment-o" color={"gray"} size={20} />
+                    <Text
+                      style={{
+                        fontSize: fontePequena.fontSize,
+                        color: fontePequena.color,
+                        margin: 5,
+                      }}
+                    >
+                      Comentar
+                    </Text>
+                  </Pressable>
+                </Animatable.View>
+              </View>
+            </View>
+          ))}
+          <View style={{ alignItems: "center", height: 180 }}>
+            <FontAwesome name="minus" color={"gray"} size={40} />
+            <Text>Íh, parece que não há nada por aqui!</Text>
+            <Text>Que tal fazer uma atualização legal agora? ✨</Text>
+          </View>
+        </ScrollView>
+        <BarraDeNavegacao />
+      </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -90,10 +225,48 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   post: {
-    borderBottomWidth: 1,
     padding: 10,
     marginVertical: 10,
-    width: '100%',
+    width: "100%",
+    borderRadius: 10,
+  },
+  cabecalhoPost: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  interacoesPostView: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
+    marginTop: 10,
+    borderTopWidth: 1,
+    width: "100%",
+  },
+  interacoesPost: {
+    flexDirection: "row",
+    alignItems: "center",
+    margin: 5,
+    padding: 5,
+  },
+  nomeUsuario: {
+    marginLeft: 5,
+    fontWeight: "bold",
+  },
+  abrirOpcoesPost: {
+    position: "absolute",
+    right: 5,
+  },
+  opcoesPost: {
+    position: "absolute",
+    right: 5,
+    top: 0,
+    borderWidth: 1,
+    borderRadius: 5,
+    zIndex: 1,
+    width: "30%",
+  },
+  opcoesPostTxt: {
+    padding: 7,
   },
 });
 

@@ -152,6 +152,7 @@ const TelaCadastro = ({ navigation }) => {
         style={styles.input}
         placeholder="Usuário"
         placeholderTextColor="gray"
+        maxLength={30}
         value={usuario}
         onChangeText={(text) => setUsuario(text)}
       />
@@ -159,6 +160,7 @@ const TelaCadastro = ({ navigation }) => {
         style={styles.input}
         placeholder="Nome"
         placeholderTextColor="gray"
+        maxLength={50}
         value={nome}
         onChangeText={(text) => setNome(text)}
       />
