@@ -13,13 +13,14 @@ export const ColorsProvider = ({ children }) => {
   const corFundo = modoEscuro ? '#121f24' : '#f8f7f4';
   const corContraste = modoEscuro ? '#f8f7f4' : '#121f24';
   const corBotoes = modoEscuro ? '#f8f7f4' : 'gray';
+  const corDestaque = modoEscuro ? "#28444f" : "#e3e2e1";
 
   const toggleModoEscuro = () => {
     setModoEscuro(prevModoEscuro => !prevModoEscuro);
   };
 
   return (
-    <ColorsContext.Provider value={{ corPrincipal, corFundo, corContraste, corBotoes, toggleModoEscuro, modoEscuro }}>
+    <ColorsContext.Provider value={{ corPrincipal, corFundo, corContraste, corBotoes, corDestaque, toggleModoEscuro, modoEscuro }}>
       {children}
     </ColorsContext.Provider>
   );

@@ -19,8 +19,9 @@ public class ComentarioResource {
     }
 
     @GetMapping("/{publicacaoId}")
-    private List<Comentario> getComentariosPorPublicacao(Long id) {
-        return comentarioRepository.findByPublicacaoId(id);
+    private List<Comentario> getComentariosPorPublicacao(@PathVariable Long publicacaoId) {
+        List<Comentario> comentarios = comentarioRepository.findAllByPublicacaoId(publicacaoId);
+        return comentarios;
     }
 
     @PostMapping

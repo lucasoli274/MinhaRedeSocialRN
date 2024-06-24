@@ -8,20 +8,19 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import dayjs from "dayjs";
-import 'dayjs/locale/pt-br'
+import 'dayjs/locale/pt-br';
 import { useColors } from "../src/contexts/Colors";
 import { useFonts } from "../src/contexts/Fonts";
 import { useAuth } from "../src/contexts/Auth";
 
 const CriarPublicacao = ({ navigation }) => {
-  const { corPrincipal, corFundo, corContraste, modoEscuro } = useColors();
+  const { corPrincipal, corFundo, corContraste, corDestaque, modoEscuro } = useColors();
   const { fontePequena, fonteMedia, fonteGrande } = useFonts();
-
-  const corDestaque = modoEscuro ? "#28444f" : "#e3e2e1";
 
   const { usuario } = useAuth();
 
@@ -49,9 +48,18 @@ const CriarPublicacao = ({ navigation }) => {
     });
   }
 
+  const toastCamposFaltando = () => {
+    Toast.show({
+      type: 'error',
+      text1: 'Preencha todos os campos',
+      position: 'bottom',
+      visibilityTime: 3000,
+    });
+  }
+
   const publicar = async () => {
     if (!conteudo) {
-      window.alert("Preencha todos os campos.");
+      toastCamposFaltando();
       return;
     }
     try {
@@ -63,9 +71,8 @@ const CriarPublicacao = ({ navigation }) => {
       });
       toastSucesso();
       navigation.goBack();
-    } catch (error) {
+    } catch {
       toastFracasso();
-      console.error("Erro:", error);
     }
   };
 
@@ -73,7 +80,7 @@ const CriarPublicacao = ({ navigation }) => {
     <View style={{ ...styles.container, backgroundColor: corFundo }}>
       <View style={styles.cabecalho}>
         <Pressable onPress={() => navigation.goBack()}>
-          <FontAwesome name="arrow-left" color={corContraste} size={30} />
+          <FontAwesome name="arrow-left" color={corContraste} size={RFValue(25)} />
         </Pressable>
         <Text
           style={{
@@ -87,7 +94,7 @@ const CriarPublicacao = ({ navigation }) => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.perfil}>
-          <FontAwesome name="user-circle" color={"gray"} size={30} />
+          <FontAwesome name="user-circle" color={"gray"} size={RFValue(25)} />
           {usuario && (
             <Text
               style={{

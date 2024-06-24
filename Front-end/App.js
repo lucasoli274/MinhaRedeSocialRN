@@ -6,10 +6,11 @@ import TelaCadastro from "./screens/TelaCadastro";
 import Home from "./screens/Home";
 import Pesquisar from "./screens/Pesquisar";
 import Atividades from "./screens/Atividades";
-import Perfil from "./screens/Perfil";
+import MeuPerfil from "./screens/MeuPerfil";
 import Menu from "./screens/Menu";
 import CriarPublicacao from "./screens/CriarPublicacao";
 import EditarPublicacao from "./screens/EditarPublicacao";
+import Comentarios from "./screens/Comentarios";
 import { ContextoPai } from "./src/contexts/ContextoPai";
 import Toast from "react-native-toast-message";
 
@@ -48,8 +49,8 @@ const App = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="Perfil"
-            component={Perfil}
+            name="MeuPerfil"
+            component={MeuPerfil}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -65,6 +66,11 @@ const App = () => {
           <Stack.Screen
             name="EditarPublicacao"
             component={EditarPublicacao}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Comentarios"
+            component={Comentarios}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>

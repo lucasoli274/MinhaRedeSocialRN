@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
 import axios from "axios";
@@ -16,10 +17,8 @@ import { useFonts } from "../src/contexts/Fonts";
 import { useAuth } from "../src/contexts/Auth";
 
 const EditarPublicacao = ({ route, navigation }) => {
-  const { corPrincipal, corFundo, corContraste, modoEscuro } = useColors();
+  const { corPrincipal, corFundo, corContraste, corDestaque, modoEscuro } = useColors();
   const { fontePequena, fonteMedia, fonteGrande } = useFonts();
-
-  const corDestaque = modoEscuro ? "#28444f" : "#e3e2e1";
 
   const { usuario } = useAuth();
 
@@ -75,7 +74,7 @@ const EditarPublicacao = ({ route, navigation }) => {
     <View style={{ ...styles.container, backgroundColor: corFundo }}>
       <View style={styles.cabecalho}>
         <Pressable onPress={() => navigation.goBack()}>
-          <FontAwesome name="arrow-left" color={corContraste} size={30} />
+          <FontAwesome name="arrow-left" color={corContraste} size={RFValue(25)} />
         </Pressable>
         <Text
           style={{
@@ -89,7 +88,7 @@ const EditarPublicacao = ({ route, navigation }) => {
       </View>
       <ScrollView contentContainerStyle={styles.scrollView}>
         <View style={styles.perfil}>
-          <FontAwesome name="user-circle" color={"gray"} size={30} />
+          <FontAwesome name="user-circle" color={"gray"} size={RFValue(25)} />
           {usuario && (
             <Text
               style={{

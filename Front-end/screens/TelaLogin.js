@@ -8,9 +8,9 @@ import {
   TextInput,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import axios from "axios";
 import Toast from "react-native-toast-message";
-
 import { useColors } from "../src/contexts/Colors";
 import { useFonts } from "../src/contexts/Fonts";
 import { useAuth } from "../src/contexts/Auth";
@@ -148,7 +148,7 @@ const TelaLogin = ({ navigation }) => {
           onPress={() => setMostrarSenha(!mostrarSenha)}
           style={styles.eyeIcon}
         >
-          <FontAwesome name="eye" color={"gray"} size={20} />
+          <FontAwesome name="eye" color={"gray"} size={RFValue(15)} />
         </Pressable>
       </View>
 
@@ -157,14 +157,14 @@ const TelaLogin = ({ navigation }) => {
         onPress={realizarLogin}
       >
         <Text style={{...styles.buttonText, fontSize: fonteMedia.fontSize}}>Entrar</Text>
-        <FontAwesome name="arrow-right" color={"white"} size={20} />
+        <FontAwesome name="arrow-right" color={"white"} size={RFValue(15)} />
       </Pressable>
       <View style={styles.loginExternoView}>
         <Pressable style={styles.btnLoginExterno}>
-          <FontAwesome name="google" color={corPrincipal} size={25} />
+          <FontAwesome name="google" color={corPrincipal} size={RFValue(20)} />
         </Pressable>
         <Pressable style={styles.btnLoginExterno}>
-          <FontAwesome name="facebook" color={corPrincipal} size={25} />
+          <FontAwesome name="facebook" color={corPrincipal} size={RFValue(20)} />
         </Pressable>
       </View>
 

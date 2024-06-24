@@ -9,9 +9,9 @@ import {
   Alert,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import axios from "axios";
 import Toast from "react-native-toast-message";
-
 import { useColors } from "../src/contexts/Colors";
 import { useFonts } from "../src/contexts/Fonts";
 
@@ -125,7 +125,7 @@ const TelaCadastro = ({ navigation }) => {
   return (
     <View style={{ ...styles.container, backgroundColor: "#F8F7F4" }}>
       <Pressable style={{position: 'absolute', top: 50, left: 15}} onPress={() => navigation.goBack()} >
-        <FontAwesome name="arrow-left" color={'gray'} size={30} />
+        <FontAwesome name="arrow-left" color={'gray'} size={RFValue(25)} />
       </Pressable>
 
       <Image
@@ -177,7 +177,7 @@ const TelaCadastro = ({ navigation }) => {
           onPress={() => setMostrarSenha1(!mostrarSenha1)}
           style={styles.eyeIcon}
         >
-          <FontAwesome name="eye" color={"gray"} size={20} />
+          <FontAwesome name="eye" color={"gray"} size={RFValue(15)} />
         </Pressable>
       </View>
       <View style={styles.inputSenha}>
@@ -193,7 +193,7 @@ const TelaCadastro = ({ navigation }) => {
           onPress={() => setMostrarSenha2(!mostrarSenha2)}
           style={styles.eyeIcon}
         >
-          <FontAwesome name="eye" color={"gray"} size={20} />
+          <FontAwesome name="eye" color={"gray"} size={RFValue(15)} />
         </Pressable>
       </View>
 
@@ -210,7 +210,7 @@ const TelaCadastro = ({ navigation }) => {
           <FontAwesome
             name="google"
             color={corPrincipal}
-            size={25}
+            size={RFValue(20)}
             style={styles.iconLoginExterno}
           />
           <Text style={{ fontSize: fontePequena.fontSize, padding: 10 }}>
@@ -221,7 +221,7 @@ const TelaCadastro = ({ navigation }) => {
           <FontAwesome
             name="facebook"
             color={corPrincipal}
-            size={25}
+            size={RFValue(20)}
             style={styles.iconLoginExterno}
           />
           <Text style={{ fontSize: fontePequena.fontSize, padding: 10 }}>

@@ -25,4 +25,7 @@ public class Usuario {
 
     @Column(nullable = false)
     private String senha;
+
+    @Column
+    private String biografia;
 }

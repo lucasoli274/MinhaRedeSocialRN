@@ -18,9 +18,10 @@ public class PublicacaoResource {
         return publicacaoRepository.findAll();
     }
 
-    @GetMapping("/{usuario}")
-    private List<Publicacao> getPostsByIdDeUsuario(@PathVariable String usuario) {
-        return publicacaoRepository.findByUsuarioUsuario(usuario);
+    @GetMapping("/{id}")
+    private List<Publicacao> getPostsByIdDeUsuario(@PathVariable Long id) {
+        List<Publicacao> publicacoes = publicacaoRepository.findAllByUsuarioId(id);
+        return publicacoes;
     }
 
     @PostMapping

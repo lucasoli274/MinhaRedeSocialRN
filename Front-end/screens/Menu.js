@@ -8,6 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import SwitchToggle from "react-native-switch-toggle";
 import Toast from "react-native-toast-message";
 import axios from "axios";
@@ -108,7 +109,7 @@ const Menu = ({ navigation }) => {
     <View style={{ ...styles.container, backgroundColor: corFundo }}>
       <View style={styles.cabecalho}>
         <Pressable onPress={() => navigation.goBack()}>
-          <FontAwesome name="arrow-left" color={corContraste} size={30} />
+          <FontAwesome name="arrow-left" color={corContraste} size={RFValue(25)} />
         </Pressable>
         <Text
           style={{
@@ -117,9 +118,19 @@ const Menu = ({ navigation }) => {
             color: fonteGrande.color,
           }}
         >
-          Configurações
+          Opções
         </Text>
       </View>
+      <Pressable style={styles.btnOpcoes}>
+        <Text
+          style={{
+            fontSize: fonteMedia.fontSize,
+            color: fonteMedia.color,
+          }}
+        >
+          Salvos
+        </Text>
+      </Pressable>
       <View style={styles.modoEscuro}>
         <Text
           style={{ fontSize: fonteMedia.fontSize, color: fonteMedia.color }}
@@ -176,7 +187,7 @@ const Menu = ({ navigation }) => {
               style={{ alignSelf: "flex-end", marginBottom: 10 }}
               onPress={toggleModalSenha}
             >
-              <FontAwesome name="times" color={"gray"} size={30} />
+              <FontAwesome name="times" color={"gray"} size={RFValue(25)} />
             </Pressable>
             <Text
               style={{
@@ -296,7 +307,7 @@ const Menu = ({ navigation }) => {
               style={{ alignSelf: "flex-end", marginBottom: 10 }}
               onPress={toggleModalConfirmar}
             >
-              <FontAwesome name="times" color={"gray"} size={30} />
+              <FontAwesome name="times" color={"gray"} size={RFValue(25)} />
             </Pressable>
             <Text
               style={{
@@ -383,7 +394,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 20,
-    marginTop: 20,
   },
   btnOpcoes: {
     marginHorizontal: 20,

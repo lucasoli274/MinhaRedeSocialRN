@@ -9,6 +9,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import * as Animatable from "react-native-animatable";
@@ -18,10 +19,8 @@ import BarraDeNavegacao from "../src/components/BarraDeNavegacao";
 import { useAuth } from "../src/contexts/Auth";
 
 const Home = ({ navigation }) => {
-  const { corPrincipal, corFundo, corContraste, modoEscuro } = useColors();
+  const { corPrincipal, corFundo, corContraste, corDestaque, modoEscuro } = useColors();
   const { fontePequena, fonteMedia, fonteGrande } = useFonts();
-
-  const corPost = modoEscuro ? "#28444f" : "#e3e2e1";
 
   const { usuario } = useAuth();
 
@@ -64,10 +63,11 @@ const Home = ({ navigation }) => {
     }
   };
 
-  const btnComentar = (index) => {
+  const btnComentar = (index, publicacao) => {
     if (comentarRefs.current[index]) {
       comentarRefs.current[index].pulse(500);
     }
+    navigation.navigate("Comentarios", {publicacao: publicacao});
   };
 
   const btnExcluirPost = async (id) => {
@@ -132,10 +132,10 @@ const Home = ({ navigation }) => {
           {publicacoes.map((publicacao, index) => (
             <View
               key={publicacao.id}
-              style={{ ...styles.post, backgroundColor: corPost }}
+              style={{ ...styles.post, backgroundColor: corDestaque }}
             >
               <View style={styles.cabecalhoPost}>
-                <FontAwesome name="user-circle" color={"gray"} size={30} />
+                <FontAwesome name="user-circle" color={"gray"} size={RFValue(25)} />
                 <Text
                   style={{
                     ...styles.nomeUsuario,
@@ -152,7 +152,7 @@ const Home = ({ navigation }) => {
                   <FontAwesome
                     name="ellipsis-v"
                     color={corContraste}
-                    size={20}
+                    size={RFValue(20)}
                   />
                 </Pressable>
                 {mostrarOpcoesPost[publicacao.id] && (
@@ -178,7 +178,7 @@ const Home = ({ navigation }) => {
                           <FontAwesome
                             name="pencil"
                             color={corContraste}
-                            size={15}
+                            size={RFValue(15)}
                           />
                         </Pressable>
                         <Pressable style={styles.btnOpcoesPost} onPress={() => btnExcluirPost(publicacao.id)}>
@@ -194,7 +194,7 @@ const Home = ({ navigation }) => {
                           <FontAwesome
                             name="trash"
                             color={corContraste}
-                            size={15}
+                            size={RFValue(15)}
                           />
                         </Pressable>
                       </View>
@@ -212,7 +212,7 @@ const Home = ({ navigation }) => {
                       <FontAwesome
                         name="bookmark"
                         color={corContraste}
-                        size={15}
+                        size={RFValue(15)}
                       />
                     </Pressable>
                   </View>
@@ -241,7 +241,7 @@ const Home = ({ navigation }) => {
                     style={styles.interacoesPost}
                     onPress={() => btnLike(index)}
                   >
-                    <FontAwesome name="bolt" color={"gray"} size={20} />
+                    <FontAwesome name="bolt" color={"gray"} size={RFValue(15)} />
                     <Text
                       style={{
                         fontSize: fontePequena.fontSize,
@@ -258,9 +258,9 @@ const Home = ({ navigation }) => {
                 >
                   <Pressable
                     style={styles.interacoesPost}
-                    onPress={() => btnComentar(index)}
+                    onPress={() => btnComentar(index, publicacao)}
                   >
-                    <FontAwesome name="comment-o" color={"gray"} size={20} />
+                    <FontAwesome name="comment-o" color={"gray"} size={RFValue(15)} />
                     <Text
                       style={{
                         fontSize: fontePequena.fontSize,
@@ -276,7 +276,7 @@ const Home = ({ navigation }) => {
             </View>
           ))}
           <View style={{ alignItems: "center", height: 180 }}>
-            <FontAwesome name="minus" color={"gray"} size={40} />
+            <FontAwesome name="minus" color={"gray"} size={RFValue(30)} />
             <Text
               style={{
                 fontSize: fontePequena.fontSize,

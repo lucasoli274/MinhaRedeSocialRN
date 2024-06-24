@@ -1,19 +1,14 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { useColors } from "../../contexts/Colors";
 import { FontAwesome } from "@expo/vector-icons";
+import { RFValue } from "react-native-responsive-fontsize";
 import { useBarraDeNavegacao } from "../../contexts/BarraDeNavegacao";
 import * as Animatable from "react-native-animatable";
 import { useNavigation } from "@react-navigation/native";
 
 const BarraDeNavegacao = () => {
-  const {
-    corPrincipal,
-    corFundo,
-    corContraste,
-    corBotoes,
-  } = useColors();
-  
+  const { corPrincipal, corFundo, corContraste, corBotoes, modoEscuro } = useColors();
   const navigation = useNavigation();
 
   const {
@@ -21,16 +16,16 @@ const BarraDeNavegacao = () => {
     setFundoHome,
     fundoSearch,
     setFundoSearch,
-    fundoPerfil,
-    setFundoPerfil,
+    fundoMeuPerfil,
+    setFundoMeuPerfil,
     fundoAtividades,
     setFundoAtividades,
     corBtnHome,
     setCorBtnHome,
     corBtnSearch,
     setCorBtnSearch,
-    corBtnPerfil,
-    setCorBtnPerfil,
+    corBtnMeuPerfil,
+    setCorBtnMeuPerfil,
     corBtnAtividades,
     setCorBtnAtividades,
   } = useBarraDeNavegacao();
@@ -40,15 +35,30 @@ const BarraDeNavegacao = () => {
   const perfilRef = useRef(null);
   const atividadesRef = useRef(null);
 
+  const atualizaCoresBotoes = () => {
+    setFundoHome(fundoHome === corPrincipal ? corPrincipal : corFundo);
+    setFundoSearch(fundoSearch === corPrincipal ? corPrincipal : corFundo);
+    setFundoMeuPerfil(fundoMeuPerfil === corPrincipal ? corPrincipal : corFundo);
+    setFundoAtividades(fundoAtividades === corPrincipal ? corPrincipal : corFundo);
+    setCorBtnHome(fundoHome === corPrincipal ? "white" : corBotoes);
+    setCorBtnSearch(fundoSearch === corPrincipal ? "white" : corBotoes);
+    setCorBtnMeuPerfil(fundoMeuPerfil === corPrincipal ? "white" : corBotoes);
+    setCorBtnAtividades(fundoAtividades === corPrincipal ? "white" : corBotoes);
+  };
+
+  useEffect(() => {
+    atualizaCoresBotoes();
+  }, [modoEscuro]);
+
   const btnHome = () => {
     homeRef.current?.pulse(500);
     setFundoHome(corPrincipal);
     setFundoSearch(corFundo);
-    setFundoPerfil(corFundo);
+    setFundoMeuPerfil(corFundo);
     setFundoAtividades(corFundo);
     setCorBtnHome("white");
     setCorBtnSearch(corBotoes);
-    setCorBtnPerfil(corBotoes);
+    setCorBtnMeuPerfil(corBotoes);
     setCorBtnAtividades(corBotoes);
     navigation.navigate("Home");
   };
@@ -57,37 +67,37 @@ const BarraDeNavegacao = () => {
     searchRef.current?.pulse(500);
     setFundoHome(corFundo);
     setFundoSearch(corPrincipal);
-    setFundoPerfil(corFundo);
+    setFundoMeuPerfil(corFundo);
     setFundoAtividades(corFundo);
     setCorBtnHome(corBotoes);
     setCorBtnSearch("white");
-    setCorBtnPerfil(corBotoes);
+    setCorBtnMeuPerfil(corBotoes);
     setCorBtnAtividades(corBotoes);
     navigation.navigate("Pesquisar");
   };
 
-  const btnPerfil = () => {
+  const btnMeuPerfil = () => {
     perfilRef.current?.pulse(500);
     setFundoHome(corFundo);
     setFundoSearch(corFundo);
-    setFundoPerfil(corPrincipal);
+    setFundoMeuPerfil(corPrincipal);
     setFundoAtividades(corFundo);
     setCorBtnHome(corBotoes);
     setCorBtnSearch(corBotoes);
-    setCorBtnPerfil("white");
+    setCorBtnMeuPerfil("white");
     setCorBtnAtividades(corBotoes);
-    navigation.navigate("Perfil");
+    navigation.navigate("MeuPerfil");
   };
 
   const btnAtividades = () => {
     atividadesRef.current?.pulse(500);
     setFundoHome(corFundo);
     setFundoSearch(corFundo);
-    setFundoPerfil(corFundo);
+    setFundoMeuPerfil(corFundo);
     setFundoAtividades(corPrincipal);
     setCorBtnHome(corBotoes);
     setCorBtnSearch(corBotoes);
-    setCorBtnPerfil(corBotoes);
+    setCorBtnMeuPerfil(corBotoes);
     setCorBtnAtividades("white");
     navigation.navigate("Atividades");
   };
@@ -95,51 +105,33 @@ const BarraDeNavegacao = () => {
   const btnPublicar = () => {
     atividadesRef.current?.pulse(500);
     navigation.navigate("CriarPublicacao");
-  }
+  };
 
   return (
-    <View
-      style={{
-        ...styles.container,
-        backgroundColor: corFundo,
-        borderColor: corContraste,
-      }}
-    >
-      <Animatable.View
-        ref={homeRef}
-        style={{ ...styles.btn, backgroundColor: fundoHome }}
-      >
+    <View style={{ ...styles.container, backgroundColor: corFundo, borderColor: corContraste }}>
+      <Animatable.View ref={homeRef} style={{ ...styles.btn, backgroundColor: fundoHome }}>
         <Pressable onPress={btnHome}>
-          <FontAwesome name='home' color={corBtnHome} size={30} />
+          <FontAwesome name='home' color={corBtnHome} size={RFValue(25)} />
         </Pressable>
       </Animatable.View>
-      <Animatable.View
-        ref={searchRef}
-        style={{ ...styles.btn, backgroundColor: fundoSearch }}
-      >
+      <Animatable.View ref={searchRef} style={{ ...styles.btn, backgroundColor: fundoSearch }}>
         <Pressable onPress={btnSearch}>
-          <FontAwesome name="search" color={corBtnSearch} size={30} />
+          <FontAwesome name="search" color={corBtnSearch} size={RFValue(25)} />
         </Pressable>
       </Animatable.View>
       <Animatable.View style={{ ...styles.btnPublicar, borderWidth: 0 }}>
         <Pressable onPress={btnPublicar}>
-          <FontAwesome name="plus-circle" color={corPrincipal} size={50} />
+          <FontAwesome name="plus-circle" color={corPrincipal} size={RFValue(45)} />
         </Pressable>
       </Animatable.View>
-      <Animatable.View
-        ref={atividadesRef}
-        style={{ ...styles.btn, backgroundColor: fundoAtividades }}
-      >
+      <Animatable.View ref={atividadesRef} style={{ ...styles.btn, backgroundColor: fundoAtividades }}>
         <Pressable onPress={btnAtividades}>
-          <FontAwesome name="bell-o" color={corBtnAtividades} size={30} />
+          <FontAwesome name="bell-o" color={corBtnAtividades} size={RFValue(25)} />
         </Pressable>
       </Animatable.View>
-      <Animatable.View
-        ref={perfilRef}
-        style={{ ...styles.btn, backgroundColor: fundoPerfil }}
-      >
-        <Pressable onPress={btnPerfil}>
-          <FontAwesome name="user-circle-o" color={corBtnPerfil} size={30} />
+      <Animatable.View ref={perfilRef} style={{ ...styles.btn, backgroundColor: fundoMeuPerfil }}>
+        <Pressable onPress={btnMeuPerfil}>
+          <FontAwesome name="user-circle-o" color={corBtnMeuPerfil} size={RFValue(25)} />
         </Pressable>
       </Animatable.View>
     </View>
