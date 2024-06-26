@@ -19,7 +19,8 @@ import BarraDeNavegacao from "../src/components/BarraDeNavegacao";
 import { useAuth } from "../src/contexts/Auth";
 
 const Home = ({ navigation }) => {
-  const { corPrincipal, corFundo, corContraste, corDestaque, modoEscuro } = useColors();
+  const { corPrincipal, corFundo, corContraste, corDestaque, modoEscuro } =
+    useColors();
   const { fontePequena, fonteMedia, fonteGrande } = useFonts();
 
   const { usuario } = useAuth();
@@ -67,19 +68,21 @@ const Home = ({ navigation }) => {
     if (comentarRefs.current[index]) {
       comentarRefs.current[index].pulse(500);
     }
-    navigation.navigate("Comentarios", {publicacao: publicacao});
+    navigation.navigate("Comentarios", { publicacao: publicacao });
   };
 
   const btnExcluirPost = async (id) => {
     try {
-      const response = await axios.delete(`http://192.168.0.34:8080/post/${id}`);
+      const response = await axios.delete(
+        `http://192.168.0.34:8080/post/${id}`
+      );
       getPublicacoes();
       toastSucessoExclusao();
     } catch {
       toastErroExclusao();
       return null;
     }
-  }
+  };
 
   const toastSucessoExclusao = () => {
     Toast.show({
@@ -101,7 +104,7 @@ const Home = ({ navigation }) => {
 
   const btnEditarPost = (publicacao) => {
     navigation.navigate("EditarPublicacao", { publicacao: publicacao });
-  }
+  };
 
   const toggleMostrarOpcoesPost = (id) => {
     setMostrarOpcoesPost((prev) => ({
@@ -135,16 +138,29 @@ const Home = ({ navigation }) => {
               style={{ ...styles.post, backgroundColor: corDestaque }}
             >
               <View style={styles.cabecalhoPost}>
-                <FontAwesome name="user-circle" color={"gray"} size={RFValue(25)} />
-                <Text
-                  style={{
-                    ...styles.nomeUsuario,
-                    fontSize: fonteMedia.fontSize,
-                    color: fonteMedia.color,
-                  }}
+                <Pressable
+                  style={{ flexDirection: "row", padding: 5 }}
+                  onPress={() =>
+                    navigation.navigate("Perfil", {
+                      perfilVisitado: publicacao.usuario,
+                    })
+                  }
                 >
-                  {publicacao.usuario.usuario}
-                </Text>
+                  <FontAwesome
+                    name="user-circle"
+                    color={"gray"}
+                    size={RFValue(25)}
+                  />
+                  <Text
+                    style={{
+                      ...styles.nomeUsuario,
+                      fontSize: fonteMedia.fontSize,
+                      color: fonteMedia.color,
+                    }}
+                  >
+                    {publicacao.usuario.usuario}
+                  </Text>
+                </Pressable>
                 <Pressable
                   style={styles.abrirOpcoesPost}
                   onPress={() => toggleMostrarOpcoesPost(publicacao.id)}
@@ -165,7 +181,10 @@ const Home = ({ navigation }) => {
                   >
                     {usuario.usuario == publicacao.usuario.usuario && (
                       <View>
-                        <Pressable style={styles.btnOpcoesPost} onPress={() => btnEditarPost(publicacao)}>
+                        <Pressable
+                          style={styles.btnOpcoesPost}
+                          onPress={() => btnEditarPost(publicacao)}
+                        >
                           <Text
                             style={{
                               ...styles.opcoesPostTxt,
@@ -181,7 +200,10 @@ const Home = ({ navigation }) => {
                             size={RFValue(15)}
                           />
                         </Pressable>
-                        <Pressable style={styles.btnOpcoesPost} onPress={() => btnExcluirPost(publicacao.id)}>
+                        <Pressable
+                          style={styles.btnOpcoesPost}
+                          onPress={() => btnExcluirPost(publicacao.id)}
+                        >
                           <Text
                             style={{
                               ...styles.opcoesPostTxt,
@@ -241,7 +263,11 @@ const Home = ({ navigation }) => {
                     style={styles.interacoesPost}
                     onPress={() => btnLike(index)}
                   >
-                    <FontAwesome name="bolt" color={"gray"} size={RFValue(15)} />
+                    <FontAwesome
+                      name="bolt"
+                      color={"gray"}
+                      size={RFValue(15)}
+                    />
                     <Text
                       style={{
                         fontSize: fontePequena.fontSize,
@@ -260,7 +286,11 @@ const Home = ({ navigation }) => {
                     style={styles.interacoesPost}
                     onPress={() => btnComentar(index, publicacao)}
                   >
-                    <FontAwesome name="comment-o" color={"gray"} size={RFValue(15)} />
+                    <FontAwesome
+                      name="comment-o"
+                      color={"gray"}
+                      size={RFValue(15)}
+                    />
                     <Text
                       style={{
                         fontSize: fontePequena.fontSize,

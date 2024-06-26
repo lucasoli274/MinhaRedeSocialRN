@@ -430,6 +430,7 @@ const Pesquisar = ({ navigation }) => {
               <View style={{ width: "100%" }} key={usuario.id}>
                 <Pressable
                   style={{ ...styles.usuario, backgroundColor: corDestaque }}
+                  onPress={() => navigation.navigate("Perfil", { perfilVisitado: usuario })}
                 >
                   <FontAwesome name="user-circle" color={"gray"} size={RFValue(20)} />
                   <Text

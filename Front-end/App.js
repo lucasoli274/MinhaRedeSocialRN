@@ -7,6 +7,7 @@ import Home from "./screens/Home";
 import Pesquisar from "./screens/Pesquisar";
 import Atividades from "./screens/Atividades";
 import MeuPerfil from "./screens/MeuPerfil";
+import Perfil from "./screens/Perfil";
 import Menu from "./screens/Menu";
 import CriarPublicacao from "./screens/CriarPublicacao";
 import EditarPublicacao from "./screens/EditarPublicacao";
@@ -51,6 +52,11 @@ const App = () => {
           <Stack.Screen
             name="MeuPerfil"
             component={MeuPerfil}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Perfil"
+            component={Perfil}
             options={{ headerShown: false }}
           />
           <Stack.Screen

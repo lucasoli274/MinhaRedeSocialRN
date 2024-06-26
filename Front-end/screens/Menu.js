@@ -131,11 +131,25 @@ const Menu = ({ navigation }) => {
           Salvos
         </Text>
       </Pressable>
-      <View style={styles.modoEscuro}>
+      <View style={styles.opcaoComToggle}>
         <Text
           style={{ fontSize: fonteMedia.fontSize, color: fonteMedia.color }}
         >
           Modo escuro
+        </Text>
+        <SwitchToggle
+          backgroundColorOff="black"
+          backgroundColorOn={corPrincipal}
+          circleStyle={styles.circleStyle}
+          switchOn={modoEscuro}
+          onPress={toggleModoEscuro}
+        />
+      </View>
+      <View style={styles.opcaoComToggle}>
+        <Text
+          style={{ fontSize: fonteMedia.fontSize, color: fonteMedia.color }}
+        >
+          Notificações
         </Text>
         <SwitchToggle
           backgroundColorOff="black"
@@ -389,7 +403,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     borderBottomColor: "gray",
   },
-  modoEscuro: {
+  opcaoComToggle: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
