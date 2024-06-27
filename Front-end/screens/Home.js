@@ -33,7 +33,7 @@ const Home = ({ navigation }) => {
 
   const getPublicacoes = async () => {
     try {
-      const response = await axios.get("http://192.168.0.34:8080/post");
+      const response = await axios.get(`http://192.168.0.34:8080/post/dosQueSigo/${usuario.id}`);
       setPublicacoes(response.data);
     } catch {
       toastErroGet();

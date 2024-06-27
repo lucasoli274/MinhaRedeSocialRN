@@ -20,4 +20,7 @@ public interface FollowRepository extends CrudRepository <Follow, Long> {
     @Query("SELECT COUNT(f) FROM Follow f WHERE f.seguido.id = :id")
     long countQuantosSeguidores(@Param("id") Long id);
 
+    @Query("SELECT f.seguido.id FROM Follow f WHERE f.quemSegue.id = :usuarioId")
+    List<Long> findSeguidosIdsByUsuarioId(@Param("usuarioId") Long usuarioId);
+
 }

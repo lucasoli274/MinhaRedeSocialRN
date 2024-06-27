@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { RFValue } from "react-native-responsive-fontsize";
 import { useColors } from "../Colors";
 
@@ -11,23 +11,28 @@ export const useFonts = () => {
 export const FontsProvider = ({ children }) => {
   const { corContraste } = useColors();
 
+  const [fontePequenaFontSize, setFontePequenaFontSize] = useState(RFValue(12));
+  const [fonteMediaFontSize, setFonteMediaFontSize] = useState(RFValue(18));
+  const [fonteGrandeFontSize, setFonteGrandeFontSize] = useState(RFValue(24));
+
+
   const fontePequena = {
-    fontSize: RFValue(12),
+    fontSize: fontePequenaFontSize,
     color: corContraste,
   };
 
   const fonteMedia = {
-    fontSize: RFValue(18),
+    fontSize: fonteMediaFontSize,
     color: corContraste,
   };
 
   const fonteGrande = {
-    fontSize: RFValue(24),
+    fontSize: fonteGrandeFontSize,
     color: corContraste,
   };
 
   return (
-    <FontsContext.Provider value={{ fontePequena, fonteMedia, fonteGrande }}>
+    <FontsContext.Provider value={{ fontePequena, fonteMedia, fonteGrande, setFontePequenaFontSize, setFonteMediaFontSize, setFonteGrandeFontSize }}>
       {children}
     </FontsContext.Provider>
   );

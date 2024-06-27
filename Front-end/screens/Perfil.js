@@ -214,8 +214,7 @@ const Perfil = ({ route, navigation }) => {
                   padding: 5,
                 }}
               >
-                Meu nome é Lucas, eu programo às vezes, mas só quando dá,
-                queria era jogar futebol.
+                {perfilVisitado.biografia}
               </Text>
               <Text
                 style={{

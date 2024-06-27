@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import Toast from "react-native-toast-message";
+import axios from "axios";
 import { useColors } from "../src/contexts/Colors";
 import { useFonts } from "../src/contexts/Fonts";
 import { useAuth } from "../src/contexts/Auth";

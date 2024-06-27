@@ -209,8 +209,7 @@ const MeuPerfil = ({ navigation }) => {
                   padding: 5,
                 }}
               >
-                Meu nome é Lucas, eu programo às vezes, mas só quando dá, queria
-                era jogar futebol.
+                {usuario.biografia}
               </Text>
               <Text
                 style={{
@@ -235,6 +234,7 @@ const MeuPerfil = ({ navigation }) => {
                   ...styles.btnEditarInformacoes,
                   backgroundColor: corDestaque,
                 }}
+                onPress={() => navigation.navigate("EditarPerfil")}
               >
                 <Text
                   style={{

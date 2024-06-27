@@ -26,6 +26,6 @@ public class Usuario {
     @Column(nullable = false)
     private String senha;
 
-    @Column
+    @Column(length = 200)
     private String biografia;
 }

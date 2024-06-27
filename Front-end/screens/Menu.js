@@ -10,6 +10,7 @@ import {
 import { FontAwesome } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
 import SwitchToggle from "react-native-switch-toggle";
+import { Picker } from "@react-native-picker/picker";
 import Toast from "react-native-toast-message";
 import axios from "axios";
 import { useColors } from "../src/contexts/Colors";
@@ -17,9 +18,16 @@ import { useFonts } from "../src/contexts/Fonts";
 import { useAuth } from "../src/contexts/Auth";
 
 const Menu = ({ navigation }) => {
-  const { corPrincipal, corFundo, corContraste, toggleModoEscuro, modoEscuro } =
+  const { corPrincipal, corFundo, corContraste, corDestaque, toggleModoEscuro, modoEscuro } =
     useColors();
-  const { fontePequena, fonteMedia, fonteGrande } = useFonts();
+  const {
+    fontePequena,
+    fonteMedia,
+    fonteGrande,
+    setFontePequenaFontSize,
+    setFonteMediaFontSize,
+    setFonteGrandeFontSize,
+  } = useFonts();
 
   const { usuario, logout } = useAuth();
 
@@ -29,6 +37,8 @@ const Menu = ({ navigation }) => {
 
   const [senha, setSenha] = useState("");
   const [senhaVazia, setSenhaVazia] = useState(false);
+
+  const [pickerFontSize, setPickerFontSize] = useState("Padrão");
 
   const toggleModalSenha = () => {
     setModalInserirSenha(!modalInserirSenha);
@@ -44,12 +54,12 @@ const Menu = ({ navigation }) => {
   };
 
   const avancarParaConfirmacao = () => {
-    if (senha == usuario.senha) {
+    if (senha === usuario.senha) {
       toggleModalSenha();
       toggleModalConfirmar();
       setSenhaVazia(false);
       setSenha("");
-    } else if (senha == "") {
+    } else if (senha === "") {
       setSenhaVazia(true);
     } else {
       toggleModalSenha();
@@ -105,11 +115,38 @@ const Menu = ({ navigation }) => {
     navigation.navigate("TelaLogin");
   };
 
+  const handleFontSize = (itemValue) => {
+    setPickerFontSize(itemValue);
+    switch (itemValue) {
+      case "Padrão":
+        setFontePequenaFontSize(RFValue(12));
+        setFonteMediaFontSize(RFValue(18));
+        setFonteGrandeFontSize(RFValue(24));
+        break;
+      case "Menor":
+        setFontePequenaFontSize(RFValue(10));
+        setFonteMediaFontSize(RFValue(16));
+        setFonteGrandeFontSize(RFValue(22));
+        break;
+      case "Maior":
+        setFontePequenaFontSize(RFValue(16));
+        setFonteMediaFontSize(RFValue(22));
+        setFonteGrandeFontSize(RFValue(28));
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <View style={{ ...styles.container, backgroundColor: corFundo }}>
       <View style={styles.cabecalho}>
         <Pressable onPress={() => navigation.goBack()}>
-          <FontAwesome name="arrow-left" color={corContraste} size={RFValue(25)} />
+          <FontAwesome
+            name="arrow-left"
+            color={corContraste}
+            size={RFValue(25)}
+          />
         </Pressable>
         <Text
           style={{
@@ -158,6 +195,25 @@ const Menu = ({ navigation }) => {
           switchOn={modoEscuro}
           onPress={toggleModoEscuro}
         />
+      </View>
+      <View style={styles.opcaoComToggle}>
+        <Text
+          style={{ fontSize: fonteMedia.fontSize, color: fonteMedia.color }}
+        >
+          Fonte
+        </Text>
+        <Picker
+          selectedValue={pickerFontSize}
+          onValueChange={handleFontSize}
+          style={{
+            width: "40%",
+            color: fontePequena.color,
+          }}
+        >
+          <Picker.Item label="Padrão" value="Padrão" />
+          <Picker.Item label="Menor" value="Menor" />
+          <Picker.Item label="Maior" value="Maior" />
+        </Picker>
       </View>
       <Pressable style={styles.btnOpcoes}>
         <Text
@@ -393,7 +449,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cabecalho: {
-    height: '12%',
+    height: "12%",
     width: "95%",
     padding: 10,
     flexDirection: "row",
